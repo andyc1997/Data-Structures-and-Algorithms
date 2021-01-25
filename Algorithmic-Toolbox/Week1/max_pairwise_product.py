@@ -6,7 +6,7 @@
 
 def max_pairwise_product(numbers):
     n = len(numbers)
-    numbers_copy = numbers
+    numbers_copy = numbers.copy()
     
     # A linear search for the first largest number in a list
     index = 0
