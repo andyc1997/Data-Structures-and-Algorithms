@@ -34,6 +34,17 @@ def get_fibonacci_huge_naive(n, m):
     # In case the cycle haven't ended, we can output the last index directly at which the n-th iteration stops.
     return F[-1]
 
+# Short version of above code
+# def get_fibonacci_huge_naive(n, m):
+#     if n <= 1:
+#         return n
+#     F = [0, 1]
+#     for i in range(2, n + 1):
+#         F.append((F[i - 1] + F[i - 2]) % m)
+#         if F[i - 1] == 0 and F[i] == 1:
+#             return(F[n % len(F[:(i - 1)])])            
+#     return F[-1]
+
 if __name__ == '__main__':
     input = sys.stdin.read();
     n, m = map(int, input.split())
