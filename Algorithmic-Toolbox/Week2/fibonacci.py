@@ -1,8 +1,8 @@
 # Uses python3
-# Task. Given an integer 𝑛, find the 𝑛th Fibonacci number 𝐹𝑛.
-# Input Format. The input consists of a single integer 𝑛.
-# Constraints. 0 ≤ 𝑛 ≤ 45.
-# Output Format. Output 𝐹𝑛.
+# Task. Given an integer n, find the 𝑛th Fibonacci number F[n].
+# Input Format. The input consists of a single integer n.
+# Constraints. 0 <= n <= 45.
+# Output Format. Output F[n].
 
 def calc_fib(n):
     F = [] # Initialize for an empty list
