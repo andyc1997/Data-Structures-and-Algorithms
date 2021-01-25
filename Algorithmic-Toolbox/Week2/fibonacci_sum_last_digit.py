@@ -2,7 +2,7 @@
 import sys
 # Task. Given an integer n, find the last digit of the sum F[0] + F[1] + · · · + F[n].
 # Input Format. The input consists of a single integer n.
-# Constraints. 0 <= n <= 1014.
+# Constraints. 0 <= n <= 10^14.
 # Output Format. Output the last digit of F[0] + F[1] + ... + F[n].
 
 def get_fibonacci_huge_naive(n, m):
