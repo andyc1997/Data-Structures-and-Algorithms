@@ -2,6 +2,7 @@
 import sys
 
 def gcd_naive(a, b):
+    # Standard implementation of the Euclid algorithm
     if a == 0:
         return b
     elif b == 0:
@@ -13,9 +14,14 @@ def gcd_naive(a, b):
     
 def lcm_naive(a, b):
     if (a != 0) or (b != 0):
+        # If not both are 0, gcd != 0 and we can return a quotient.
+        # Let gcd(a, b) = g. Then, a = g*m and b = g*n where gcd(m, n) = 1.
+        # Otherwise, we can find g' > g and reject g is gcd.
+        # So, by definition of least common multiple, lcm = g*n*m = (g*m)*(g*n)/g = (a*b)/g.
         gcd = gcd_naive(a, b)
         return int((a * b) / gcd)
     else:
+        # If a and b are 0, then we cannot do division and return 0
         return 0
 
 if __name__ == '__main__':
