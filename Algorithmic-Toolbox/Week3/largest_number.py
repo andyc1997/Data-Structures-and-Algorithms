@@ -8,6 +8,7 @@ import sys
 # Greedy algorithm: We pick number a[j] such that a[j]a[i] > a[i]a[j] over the list, and r = a[k[1]]...a[k[l]]a[j]
 # We need show that: if a[j]a[i] > a[i]a[j] where i != j, then a[k[s]]...a[j]a[i].....a[k[l]] > a[k[s]]....a[i]a[j]....a[k[l]]
 # If a[j]a[i] > a[i]a[j], then (a[j]a[i])*10^d > (a[i]a[j])^10^d, and adding constant does not change optimality
+# So, it's a safe move
 
 def greater(a, b):
     is_greater = int(str(a) + str(b)) >= int(str(b) + str(a)) # a[j]a[i] > a[i]a[j]
