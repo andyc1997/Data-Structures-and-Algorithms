@@ -10,15 +10,11 @@ def get_change(m):
     # Greedy algorithm: First change with coins with denomination 10
     # Then, change with coins with denomination 5.
     # At last, change with coins with denomination 1.
-    # Safe move: Suppose we have K amount changed using the abovementioned procedure.
-    # Suppose we have M additional amount added to K. 
-    # We change K + M with (K + M) mod 10 coins denominated with 10.
-    # For the subproblem, we must also change K and M with K mod 10 and M mod 10 coins denominated in 10, resp.
-    # Hence, it's a safe move to change with coins denominated in 10 first.
-    # Second, we can change L = (K + M) mod 10 with L mod 5 coins denominated in 5.
-    # For the subproblem, we must also change (K mod 10) mod 5 and (M mod 10) mod 5 for K and M, resp.
-    # Hence, it's also a safe move. The remaining amount should therefore be changed with coins denominated in 1.
-    # The optimality of subproblem is consistent with the optimality of the original problem.
+    # If we have K dollars. Either K >= 10, 5 <= K < 10 and 1 <= K < 5.
+    # Case 1: Changing K into coins with denomination 10 is obviously better than changing K into coins with denominations 5 or 1.
+    # Case 2: We cannot change K into coins with denomination 10. It is obvious that changing K into coins with denominations 5 yield less coins.
+    # Case 3: Trivial.
+    # In all three cases, the changing coins with the largest denomination available is a safe move.
     after_ten = m % 10 # Total amount after changing with coin 10
     ten_count = (m - after_ten) / 10 # How many coin 10 should be changed
     after_five = after_ten % 5 # Total amount after changing with coin 5, it can be changed with coin 1
