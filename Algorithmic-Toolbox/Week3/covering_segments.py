@@ -2,7 +2,7 @@
 import sys
 from collections import namedtuple
 
-# Task. Given a set of 𝑛 segments {[a[0], b[0]], [a[1], b[1]], . . . , [a[n−1], b[n−1]]} with integer coordinates on a line, find
+# Task. Given a set of n segments {[a[0], b[0]], [a[1], b[1]], . . . , [a[n−1], b[n−1]]} with integer coordinates on a line, find
 # the minimum number m of points such that each segment contains at least one point. That is, find a
 # set of integers X of the minimum size such that for any segment [a[i], b[i]] there is a point x ∈ X such
 # that a[i] <= x <= b[i].
