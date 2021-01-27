@@ -7,7 +7,15 @@ import sys
 # Output Format. Output the maximal value of fractions of items that fit into the knapsack.
 
 # Greedy algorithm: Take the items with maximum v[j] to w[j] ratio until the capacity is full
-# If the last item is removed, the remaining items also yield an optimal solution to the subproblem. So, this is a safe move
+# If we have capacity W and j-th item has maximum ratio of values to weights. Either w[j] >= W or w[j] < W.
+# Case 1: w[j] >= W
+# Let i != j, i' != i and i' != j.
+# If w[i] > W, then v[j]/w[j] * W > v[i]/w[i]*W implies picking j-th item as optimal.
+# Otherwise, v[i] + v[i']/w[i']*(W - w[i]) < v[i]/w[i]*w[i] + v[i]/w[i]*(W - w[i]) = v[i]/w[i]*W < v[j]/w[j]*W. So, it's optimal to pick j-th item.
+# Case 2: w[j] < W
+# As v[j] > v[i]*w[j]/w[i], we should pick j-th item.
+# In both cases, pick j-th item is a safe move.
+
 def avoid_zero(v, w):
     if w == 0: # v[j]/w[j] is undefined mathematically when w[j] = 0. Let assume the item does not exist, so return value 0
         return 0
