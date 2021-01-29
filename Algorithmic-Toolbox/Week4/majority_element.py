@@ -2,9 +2,10 @@
 import sys
 # Task. The goal in this code problem is to check whether an input sequence contains a majority element.
 # Input Format. The first line contains an integer n, the next one contains a sequence of n non-negative
-# integers 𝑎[0], 𝑎[1], . . . , a[n-1].
+# integers a[0], a[1], . . . , a[n-1].
 # Output Format. Output 1 if the sequence contains an element that appears strictly more than n/2 times,
 # and 0 otherwise.
+# Note: As n can grow to 10^9, I've tried many methods e.g. merge sort and only this method works.
 
 def get_majority_element(a, left, right):
     if left + 1 == right: # Base case: a[left:right] has length 1; return a[left] i.e. a single number
