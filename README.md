@@ -1,7 +1,7 @@
 # Data-Structures-and-Algorithms
 Starting from March 2020, I learn algorithms in a more formal way through this course offered in Coursera, and try to solve algorithmic problems using Python. Explanations are provided in code.
 
-Course link:
+**Course link:**
 
 https://www.coursera.org/specializations/data-structures-algorithms
 
