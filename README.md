@@ -8,14 +8,14 @@ https://www.coursera.org/specializations/data-structures-algorithms
 
 **Course 1: Algorithmic Toolbox**
 
-Week 1: Programming Challenges
+Week 1: [Programming Challenges](Algorithmic-Toolbox/Week1)
 
-Week 2: Algorithmic Warm-up
+Week 2: [Algorithmic Warm-up](Algorithmic-Toolbox/Week2)
 
-Week 3: Greedy Algorithms
+Week 3: [Greedy Algorithms](Algorithmic-Toolbox/Week3)
 
-Week 4: Divide-and-Conquer
+Week 4: [Divide-and-Conquer](Algorithmic-Toolbox/Week4)
 
-Week 5: Dynamic Programming 1
+Week 5: [Dynamic Programming 1](Algorithmic-Toolbox/Week5)
 
 Week 6: Dynamic Programming 2
