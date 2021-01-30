@@ -3,12 +3,13 @@ import sys
 # Task. Implement a stack supporting the operations Push(), Pop(), and Max().
 # Input Format. The first line of the input contains the number q of queries. Each of the following q lines
 # specifies a query of one of the following formats: push v, pop, or max.
+# Constraints. 1 <= q <= 400 000, 0 <= v <= 105.
 # Output Format. For each max query, output (on a separate line) the maximum value of the stack.
 
 class StackWithMax():
     def __init__(self):
         self.__stack = [] # An empty list to store q in the stack
-        self.__max = [] # An empty list to keep track of the max value in the stack. The cost is double the memeory requirement.
+        self.__max = [] # An empty list to keep track of the max value in the stack. The cost is double memeory requirement.
 
     def Push(self, a): # Push: An element is added to the stack
         # A greedy algorithm to take maximum value from queries. Push() has O(1) operations
