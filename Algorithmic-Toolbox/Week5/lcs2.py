@@ -1,6 +1,6 @@
 #Uses python3
 import sys
-# Task. Given two sequences A = (a[1], a[2], ... , a[n]]) and B = (b[1], b[2]], ,,, , b[m]), find the length of their longest
+# Task. Given two sequences A = (a[1], a[2], ... , a[n]) and B = (b[1], b[2]], ,,, , b[m]), find the length of their longest
 # common subsequence, i.e., the largest non-negative integer p such that there exist indices 1 <= i[1] <
 # i[2] < ... < i[p] <= n and 1 <= j[1] < j[2] < ... < j[p] <= m, such that a[i[1]] = b[j[1]] , ... , a[i[p]] = b[j[p]].
 # Input Format. First line: n. Second line: a[1], a[2], ... , a[n]. Third line: m. Fourth line: b[1], b[2], ... , b[m].
