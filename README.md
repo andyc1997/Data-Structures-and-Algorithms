@@ -18,3 +18,5 @@ Week 4: [Divide-and-Conquer](Algorithmic-Toolbox/Week4)
 Week 5: [Dynamic Programming 1](Algorithmic-Toolbox/Week5)
 
 Week 6: [Dynamic Programming 2](Algorithmic-Toolbox/Week6)
+
+**Course 2: Data Structures **
