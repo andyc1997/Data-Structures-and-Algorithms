@@ -7,8 +7,9 @@ import sys
 # Constraints. 1 <= n, m <= 100; −109 < a[i], b[i] < 109.
 # Output Format. Output p.
 
-def edit_distance(s, t):
+def edit_distance(s, t): # Please read edit_distance.py for explanation
     D = [(len(t) + 1) * [0] for i in range(len(s) + 1)]
+    
     for i in range(1, len(s) + 1):
         D[i][0] = i
     for i in range(1, len(t) + 1):
@@ -23,8 +24,10 @@ def edit_distance(s, t):
                 D[i][j] = min(insertion, deletion, match)
             else:
                 D[i][j] = min(insertion, deletion, mismatch)
+                
     i, j = len(s), len(t)
     count, common = 0, 0
+    
     while (i != 0) | (j != 0):
         if (i > 0) & (D[i][j] == D[i - 1][j] + 1):
             count += 1
