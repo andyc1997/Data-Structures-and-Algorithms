@@ -4,7 +4,7 @@ import sys
 # common subsequence, i.e., the largest non-negative integer p such that there exist indices 1 <= i[1] <
 # i[2] < ... < i[p] <= n and 1 <= j[1] < j[2] < ... < j[p] <= m, such that a[i[1]] = b[j[1]] , ... , a[i[p]] = b[j[p]].
 # Input Format. First line: n. Second line: a[1], a[2], ... , a[n]. Third line: m. Fourth line: b[1], b[2], ... , b[m].
-# Constraints. 1 <= n, m <= 100; −109 < a[i], b[i] < 109.
+# Constraints. 1 <= n, m <= 100; −10 ** 9 < a[i], b[i] < 10 ** 9.
 # Output Format. Output p.
 
 def edit_distance(s, t): # Please read edit_distance.py for explanation
