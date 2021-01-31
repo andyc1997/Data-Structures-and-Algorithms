@@ -42,3 +42,7 @@ if __name__ == '__main__':
 
     print(*max_sliding_window_naive(input_sequence, window_size))
 
+# Problem confusing me:
+# If we consider data = [1, 1, 1, 1, 1, 1, 1, 1, ...., 1, 5]
+# We need a while loop to compare sequence[j] and sequence[window[-1]] until 1) window is empty or 2) sequence[window[-1]] < sequence[j].
+# There should be at most O(m) comparison. Why isn't such algorithm O(m*n) but O(n)? I am a bit confusing about it and nonetheless it works much faster than naive solution.
