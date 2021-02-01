@@ -21,9 +21,6 @@ class Heap(): # A binary min-heap
     
     def RightChild(i): # return the index of right child
         return 2 * i + 2
-    
-    def Parent(i): # return the index of parent
-        return (i - 1) // 2
 
     def SiftDown(self, i):
         minIndex = i
