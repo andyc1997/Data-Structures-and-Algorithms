@@ -11,15 +11,15 @@
 # Output Format. Print the result of each of the find and check queries, one result per line, in the same
 # order as these queries are given in the input.
 
-class Query:
+class Query: # An object Query
     def __init__(self, query):
-        self.type = query[0]
-        if self.type == 'check':
+        self.type = query[0] # It can be "add", "del", "find", "check"
+        if self.type == 'check': # If it's a "check" command, the following character is a number
             self.ind = int(query[1])
-        else:
+        else: # Otherwise, it's a string
             self.s = query[1]
 
-class QueryProcessor:
+class QueryProcessor: # An object Query Processor
     _multiplier = 263
     _prime = 1000000007
 
@@ -57,6 +57,7 @@ class QueryProcessor:
 
             if query.type == 'find':
                 self.write_search_result(ind != -1)
+                
             elif query.type == 'add':
                 if ind == -1:
                     if hashed_string in self.elems:
