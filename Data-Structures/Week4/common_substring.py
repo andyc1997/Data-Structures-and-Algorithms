@@ -7,6 +7,7 @@ Answer = namedtuple('answer_type', 'i j len')
 # outputting three integers: its starting position in s, its starting position in t (both 0-based), and its
 # length. More formally, output integers 0 <= i < |s|, 0 <= j < |t|, and l >= 0 such that s[i]s[i+1]...s[i+l-1] =
 # t[j]t[j+1]...t[j+l-1] and l is maximal. (As usual, if there are many such triples with maximal l, output any of them.)
+
 def poly_hash(S, p, x): # Standard implementation of polynomial hashing
     hash_num = [0]
     x_mod_p = [1]
