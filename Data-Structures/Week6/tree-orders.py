@@ -26,12 +26,12 @@ class TreeOrders:
           self.left[i] = b
           self.right[i] = c
           
-    def InOrderTraversal(self, i, result): # Standard implementation of in-order traversal, https://en.wikipedia.org/wiki/Tree_traversal
+    def inOrderTraversal(self, i, result): # Standard implementation of in-order traversal, https://en.wikipedia.org/wiki/Tree_traversal
         if i == -1:
             return None
-        self.InOrderTraversal(self.left[i], result)
+        self.inOrderTraversal(self.left[i], result)
         result.append(self.key[i])
-        self.InOrderTraversal(self.right[i], result)
+        self.inOrderTraversal(self.right[i], result)
         return result
 
     def preOrderTraversal(self, i, result): # Standard implementation of pre-order traversal, https://en.wikipedia.org/wiki/Tree_traversal
@@ -53,7 +53,7 @@ class TreeOrders:
 def main():
     tree = TreeOrders()
     tree.read()
-    print(" ".join(str(x) for x in tree.InOrderTraversal(0, list())))
+    print(" ".join(str(x) for x in tree.inOrderTraversal(0, list())))
     print(" ".join(str(x) for x in tree.preOrderTraversal(0, list())))
     print(" ".join(str(x) for x in tree.postOrderTraversal(0, list())))
 
