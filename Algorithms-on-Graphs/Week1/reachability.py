@@ -1,21 +1,22 @@
 #Uses python3
-
 import sys
-def explore(v, adj, visit):
-    # Explore vertex
-    visit[v] = 1
-    for w in adj[v]:
+# Task. Given an undirected graph and two distinct vertices u and v, check if there is a path between u and v.
+# Input Format. An undirected graph with n vertices and m edges. The next line contains two vertices u
+# and v of the graph.
+# Output Format. Output 1 if there is a path between u and v and 0 otherwise.
+
+def explore(v, adj, visit): # Do a depth first search from vertex v
+    visit[v] = 1 # If we explore the neighborhood of v, we must have visited v
+    for w in adj[v]: # Explore the unvisited neighborhoods of vertex v
         if visit[w] == 0:
             explore(w, adj, visit)
-    return visit
-
+            
 def reach(adj, x, y):
-    #write your code here
-    visit = len(adj) * [0]
-    result = explore(x, adj, visit)
-    if result[y] > 1:
+    visit = len(adj) * [0] # At the beginning, all vertices are not visited
+    explore(x, adj, visit) # Now, we start at vertex x, and explore the adjacent vertices of x
+    if visit[y] > 1: # if the target node, y, is visited in depth first search started at x, it is reachable by definition and we return 1
         return 1
-    return 0
+    return 0 # Otherwise, it's not reachable and return 0
 
 if __name__ == '__main__':
     input = sys.stdin.read()
