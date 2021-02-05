@@ -1,9 +1,12 @@
 # python3
-
 from sys import stdin
+# Task. Implement a data structure that stores a set S of integers with the following allowed operations:
+# 1. add(i) — add integer i into the set S (if it was there already, the set doesn’t change).
+# 2. del(i) — remove integer i from the set S (if there was no such element, nothing happens).
+# 3. find(i) — check whether i is in the set S or not.
+# 4. sum(l, r) — output the sum of all elements v in S such that l <= v <= r.
 
 # Splay tree implementation
-
 # Vertex of a splay tree
 class Vertex:
   def __init__(self, key, sum, left, right, parent):
@@ -74,6 +77,7 @@ def splay(v):
 # bigger key (next value in the order).
 # If the key is bigger than all keys in the tree,
 # then result is None.
+
 def find(root, key): 
   v = root
   last = root
@@ -136,8 +140,8 @@ def next_largest(v):
         return left_descendant(v.right)
     else:
         return right_ancestor(v)
-# Code that uses splay tree to solve the problem
-                                    
+      
+# Code that uses splay tree to solve the problem                                
 root = None
 
 def insert(x):
@@ -148,27 +152,24 @@ def insert(x):
     new_vertex = Vertex(x, x, None, None, None)  
   root = merge(merge(left, new_vertex), right)
   
-def erase(x): 
+def erase(x): # First function
   global root
-  # Implement erase yourself
   (left, mid) = split(root, x)
   (mid, right) = split(mid, x + 1)
   root = merge(left, right)
           
-def search(x): 
+def search(x): # Second function 
   global root
-  # Implement find yourself
   (next, root) = find(root, x)
   if next != None and next.key == x:
       return True
   return False
   
-def sum(fr, to): 
+def sum(fr, to): # Third function
   global root
   (left, middle) = split(root, fr)
   (middle, right) = split(middle, to + 1)
   ans = 0
-  # Complete the implementation of sum
   if middle != None:
       ans += middle.sum
   root = merge(merge(left, middle), right)
@@ -176,7 +177,6 @@ def sum(fr, to):
 
 MODULO = 1000000001
 n = int(stdin.readline())
-# query = ['+ 2', '+ 5', '+ 1', '- 1', '- 2', '- 5', '? 1', '? 2', '? 5']
 last_sum_result = 0
 for i in range(n):
   line = stdin.readline().split()
