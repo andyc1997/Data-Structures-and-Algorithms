@@ -37,10 +37,10 @@ Week 6: [Binary Search Trees 2](Data-Structures/Week6)
 
 Week 1: [Decomposition of Graphs 1](Algorithms-on-Graphs/Week1)
 
-Week 2: Decomposition of Graphs 2
+Week 2: [Decomposition of Graphs 2](Algorithms-on-Graphs/Week2)
 
-Week 3: Paths in Graphs 1
+Week 3: [Paths in Graphs 1](Algorithms-on-Graphs/Week3)
 
-Week 4: Paths in Graphs 2
+Week 4: [Paths in Graphs 2](Algorithms-on-Graphs/Week4)
 
-Week 5: Minimum Spanning Trees
+Week 5: [Minimum Spanning Trees](Algorithms-on-Graphs/Week5)
