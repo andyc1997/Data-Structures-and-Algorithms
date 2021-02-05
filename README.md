@@ -35,7 +35,7 @@ Week 6: [Binary Search Trees 2](Data-Structures/Week6)
 
 **Course 3: Algorithms on Graphs**
 
-Week 1: Decomposition of Graphs 1
+Week 1: [Decomposition of Graphs 1](Algorithms-on-Graphs/Week1)
 
 Week 2: Decomposition of Graphs 2
 
