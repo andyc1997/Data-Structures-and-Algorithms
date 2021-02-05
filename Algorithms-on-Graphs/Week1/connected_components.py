@@ -4,7 +4,7 @@ import sys
 # Input Format. A graph is given in the standard format.
 # Output Format. Output the number of connected components.
 
-def explore(v, adj, visit):
+def explore(v, adj, visit): # See reachability.py
     visit[v] = 1
     for w in adj[v]:
         if visit[w] == 0:
