@@ -1,23 +1,22 @@
 #Uses python3
-
 import sys
+# Task. Given an undirected graph with n vertices and m edges, compute the number of connected components in it.
+# Input Format. A graph is given in the standard format.
+# Output Format. Output the number of connected components.
 
 def explore(v, adj, visit):
-    # Explore vertex
     visit[v] = 1
     for w in adj[v]:
         if visit[w] == 0:
             explore(w, adj, visit)
-    return visit
 
 def number_of_components(adj):
-    result = 0
-    #write your code here
+    result = 0 # The number of connected components
     visit = len(adj) * [0]
     for v in range(len(adj)):
         if visit[v] == 0:
-            visit = explore(v, adj, visit)
-            result += 1
+            explore(v, adj, visit)
+            result += 1 # After a depth first search, increase the connected components by 1
     return result
 
 if __name__ == '__main__':
