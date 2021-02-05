@@ -108,7 +108,6 @@ def split(root, key):
   update(right)
   return (left, right)
 
-  
 def merge(left, right):
   if left == None:
     return right
@@ -120,26 +119,6 @@ def merge(left, right):
   right.left = left
   update(right)
   return right
-
-def left_descendant(v):
-    if v.left == None:
-        return v
-    else:
-        return left_descendant(v.left)
-
-def right_ancestor(v):
-    if v.parent != None:
-        if v.key < v.parent.key:
-            return v.parent
-        else:
-            return right_ancestor(v.parent)
-    return v
-
-def next_largest(v):
-    if v.right != None:
-        return left_descendant(v.right)
-    else:
-        return right_ancestor(v)
       
 # Code that uses splay tree to solve the problem                                
 root = None
