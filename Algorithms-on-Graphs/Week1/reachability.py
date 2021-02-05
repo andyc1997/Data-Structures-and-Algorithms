@@ -14,7 +14,7 @@ def explore(v, adj, visit): # Do a depth first search from vertex v
 def reach(adj, x, y):
     visit = len(adj) * [0] # At the beginning, all vertices are not visited
     explore(x, adj, visit) # Now, we start at vertex x, and explore the adjacent vertices of x
-    if visit[y] > 1: # if the target node, y, is visited in depth first search started at x, it is reachable by definition and we return 1
+    if visit[y] > 0: # if the target node, y, is visited in depth first search started at x, it is reachable by definition and we return 1
         return 1
     return 0 # Otherwise, it's not reachable and return 0
 
