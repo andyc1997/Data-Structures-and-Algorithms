@@ -21,7 +21,7 @@ def explore(v, visit, radj, pre, post, clock, stack): # The explore algorithm as
     for w in radj[v]: # explore neighborhoods of v
         if visit[w] == 0:
             clock = explore(w, visit, radj, pre, post, clock, stack)
-    stack.append(v) # append v in descending order of postvisit in the reversed graph
+    stack.append(v) # append v in ascending order of postvisit in the reversed graph
     clock = postvisit(v, post, clock) # calculate the postvisit order of node v
     return clock
 
@@ -36,7 +36,7 @@ def dfs(radj): # A depth first search for reversed graph
     visit = [0] * n # visit: if each vertex in the reversed graph is visited (1 if yes, 0 if no) 
     clock = 0 # Initialize the clock
     pre, post = [0] * n, [0] * n # preorder and postorder visits for vertices
-    stack = [] # a LIFO queue to store the nodes in descending postvisit order in the reversed graph
+    stack = [] # a LIFO queue to store the nodes in ascending postvisit order in the reversed graph
     for v in range(n): # Do a depth first search to explore unvisited vertices
         if visit[v] == 0:
             clock = explore(v, visit, radj, pre, post, clock, stack)
@@ -48,7 +48,7 @@ def number_of_strongly_connected_components(adj, radj):
     n = len(stack) # number of nodes in graphs, same as len(adj)
     visit = [0] * n
     for i in range(n): 
-        v = stack.pop() # start with the largest postorder node in the reversed graph
+        v = stack.pop() # start with the largest postorder node in the reversed graph (rmb: LIFO queue)
         if visit[v] == 0:
             simple_explore(v, visit, adj) # explore all nodes reachable from the largest postorder node. These nodes form a strongly connected component
             result += 1
