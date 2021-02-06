@@ -1,27 +1,28 @@
 #Uses python3
-
 import sys
-
 sys.setrecursionlimit(200000)
+# Task. Task. Compute the number of strongly connected components of a given directed graph with n vertices and m edges.
+# Input Format. A graph is given in the standard format.
+# Output Format. Output the number of strongly connected components.
 
-def previsit(v, pre, clock):
+def previsit(v, pre, clock): # update previsit order
     pre[v] = clock
     clock += 1
     return clock
 
-def postvisit(v, post, clock):
+def postvisit(v, post, clock): # update postvisit order
     post[v] = clock
     clock += 1
     return clock
 
-def explore(v, visit, radj, pre, post, clock, stack):
-    visit[v] = 1
-    clock = previsit(v, pre, clock)
-    for w in radj[v]:
+def explore(v, visit, radj, pre, post, clock, stack): # The explore algorithm associated with depth first search of the reversed graph
+    visit[v] = 1 # update the visit status of node v
+    clock = previsit(v, pre, clock) # calculate the previsit order of node v
+    for w in radj[v]: # explore neighborhoods of v
         if visit[w] == 0:
             clock = explore(w, visit, radj, pre, post, clock, stack)
-    stack.append(v)
-    clock = postvisit(v, post, clock)
+    stack.append(v) # append v, which is a source node (with largest postorder) in the reversed graph
+    clock = postvisit(v, post, clock) # calculate the postvisit order of node v
     return clock
 
 def simple_explore(v, visit, adj):
@@ -30,25 +31,24 @@ def simple_explore(v, visit, adj):
         if visit[w] == 0:
             simple_explore(w, visit, adj)
 
-def dfs(radj):
+def dfs(radj): # A depth first search for reversed graph
     n = len(radj)
-    visit = [0] * n
-    clock = 0
-    pre, post = [0] * n, [0] * n
-    stack = []
-    for v in range(n):
+    visit = [0] * n # visit: if each vertex in the reversed graph is visited (1 if yes, 0 if no) 
+    clock = 0 # Initialize the clock
+    pre, post = [0] * n, [0] * n # preorder and postorder visits for vertices
+    stack = [] # a LIFO queue to store the source nodes in the reversed graph
+    for v in range(n): # Do a depth first search to explore unvisited vertices
         if visit[v] == 0:
             clock = explore(v, visit, radj, pre, post, clock, stack)
     return stack
             
 def number_of_strongly_connected_components(adj, radj):
     result = 0
-    #write your code here
-    stack = dfs(radj)
-    n = len(stack)
-    visit = [0] * n
-    for i in range(n):
-        v = stack.pop()
+    stack = dfs(radj) # sink nodes in the original metagraph
+    n = len(stack) # number of sink
+    visit = [0] * n # visit status of sink are initialized to 0
+    for i in range(n): # perform a depth first search on sink nodes. all nodes within the same strongly connected components will be visited using simple_explore
+        v = stack.pop() # start with largest postorder in the reversed graph
         if visit[v] == 0:
             simple_explore(v, visit, adj)
             result += 1
@@ -57,7 +57,6 @@ def number_of_strongly_connected_components(adj, radj):
 if __name__ == '__main__':
     input = sys.stdin.read()
     data = list(map(int, input.split()))
-    #data = [4, 4, 1, 2, 4, 1, 2, 3, 3, 1]
     n, m = data[0:2]
     data = data[2:]
     edges = list(zip(data[0:(2 * m):2], data[1:(2 * m):2]))
