@@ -25,7 +25,7 @@ def explore(v, visit, radj, pre, post, clock, stack): # The explore algorithm as
     clock = postvisit(v, post, clock) # calculate the postvisit order of node v
     return clock
 
-def simple_explore(v, visit, adj):
+def simple_explore(v, visit, adj): # The explore algorithm associated with depth first search of strongly connected components
     visit[v] = 1
     for w in adj[v]:
         if visit[w] == 0:
@@ -36,7 +36,7 @@ def dfs(radj): # A depth first search for reversed graph
     visit = [0] * n # visit: if each vertex in the reversed graph is visited (1 if yes, 0 if no) 
     clock = 0 # Initialize the clock
     pre, post = [0] * n, [0] * n # preorder and postorder visits for vertices
-    stack = [] # a LIFO queue to store the source nodes in the reversed graph
+    stack = [] # a LIFO queue to store the nodes in descending postvisit order in the reversed graph
     for v in range(n): # Do a depth first search to explore unvisited vertices
         if visit[v] == 0:
             clock = explore(v, visit, radj, pre, post, clock, stack)
@@ -44,13 +44,13 @@ def dfs(radj): # A depth first search for reversed graph
             
 def number_of_strongly_connected_components(adj, radj):
     result = 0
-    stack = dfs(radj) # sink nodes in the original metagraph
-    n = len(stack) # number of sink
-    visit = [0] * n # visit status of sink are initialized to 0
+    stack = dfs(radj)
+    n = len(stack) # number of nodes in graphs, same as len(adj)
+    visit = [0] * n
     for i in range(n): 
-        v = stack.pop() # start with largest postorder in the reversed graph, check if there are sink nodes reachable from it
+        v = stack.pop() # start with the largest postorder node in the reversed graph
         if visit[v] == 0:
-            simple_explore(v, visit, adj)
+            simple_explore(v, visit, adj) # explore all nodes reachable from the largest postorder node. These nodes form a strongly connected component
             result += 1
     return result
 
