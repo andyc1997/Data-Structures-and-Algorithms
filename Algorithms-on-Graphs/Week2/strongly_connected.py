@@ -21,7 +21,7 @@ def explore(v, visit, radj, pre, post, clock, stack): # The explore algorithm as
     for w in radj[v]: # explore neighborhoods of v
         if visit[w] == 0:
             clock = explore(w, visit, radj, pre, post, clock, stack)
-    stack.append(v) # append v, which is a source node (with largest postorder) in the reversed graph
+    stack.append(v) # append v in descending order of postvisit in the reversed graph
     clock = postvisit(v, post, clock) # calculate the postvisit order of node v
     return clock
 
@@ -47,8 +47,8 @@ def number_of_strongly_connected_components(adj, radj):
     stack = dfs(radj) # sink nodes in the original metagraph
     n = len(stack) # number of sink
     visit = [0] * n # visit status of sink are initialized to 0
-    for i in range(n): # perform a depth first search on sink nodes. all nodes within the same strongly connected components will be visited using simple_explore
-        v = stack.pop() # start with largest postorder in the reversed graph
+    for i in range(n): 
+        v = stack.pop() # start with largest postorder in the reversed graph, check if there are sink nodes reachable from it
         if visit[v] == 0:
             simple_explore(v, visit, adj)
             result += 1
