@@ -1,6 +1,15 @@
 # python3
 import sys
 from collections import deque
+# Task. You are given a string S and you have to process n queries. Each query is described by three integers
+# i, j, k and means to cut substring S[i...j] (i and j are 0-based) from the string and then insert it after the
+# k-th symbol of the remaining string (if the symbols are numbered from 1). If k = 0, S[i...j] is inserted
+# in the beginning. See the examples for further clarification.
+# Input Format. The first line contains the initial string S.
+# The second line contains the number of queries q.
+# Next q lines contain triples of integers i, j, k.
+# Output Format. Output the string after all q queries.
+
 class Vertex:
     def __init__(self, key, size, left, right, parent):
         # Each vertex has several fields
