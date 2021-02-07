@@ -20,7 +20,7 @@ def bipartite(adj, n, m):
     while not q_vertex.empty(): # We color nodes in black and white (represented by numbers 1 and 0) in BFS
         u = q_vertex.get()
         for v in adj[u]:
-            if dist[v] == inf: # if v hasn't been visited, enqueue it and update color it with an opposite color
+            if dist[v] == inf: # if v hasn't been visited, enqueue it and update its color with an opposite color
                 q_vertex.put(v)
                 dist[v] = 1 - dist[u]
             else: # Otherwise, v has been visited and assigned a color. If the color of two adjacent nodes are the same, then G cannot be bipartite. Stop and return the results
