@@ -1,6 +1,5 @@
 #Uses python3
 import sys
-import queue
 # Task. Given an directed graph with positive edge weights and with n vertices and m edges as well as two
 # vertices u and v, compute the weight of a shortest path between u and v (that is, the minimum total
 # weight of a path from u to v).
@@ -96,8 +95,8 @@ def distance(adj, cost, s, t):
     
     # Build heap
     for node_num, priority in zip(node, dist):
-        H.Put((priority, node_num)) 
-    H.SiftUp(s)
+        H.Put((priority, node_num))
+    H.SiftUp(s) # dist[s] = 0, should be the root of min heap
     
     # Edge relaxation
     while not H.Empty():
