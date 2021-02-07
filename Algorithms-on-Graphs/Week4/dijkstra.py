@@ -96,7 +96,8 @@ def distance(adj, cost, s, t):
     
     # Build heap
     for node_num, priority in zip(node, dist):
-        H.Put((priority, node_num))
+        H.Put((priority, node_num)) 
+    H.SiftUp(s)
     
     # Edge relaxation
     while not H.Empty():
