@@ -57,7 +57,7 @@ Week 4: Constructing Suffix Arrays and Suffix Trees
 
 **Course 5: Advanced Algorithms and Complexity**
 
-Week 1: [Flows in Networks](Data-Structures-and-Algorithms/Advanced-Algorithms-and-Complexity/Week1)
+Week 1: [Flows in Networks](Advanced-Algorithms-and-Complexity/Week1)
 
 Week 2: Linear Programming
 
