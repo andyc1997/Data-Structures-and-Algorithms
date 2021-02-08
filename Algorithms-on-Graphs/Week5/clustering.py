@@ -1,6 +1,15 @@
 #Uses python3
 import sys
 import math
+# Task. Given n points on a plane and an integer k, compute the largest possible value of d such that the
+# given points can be partitioned into k non-empty subsets in such a way that the distance between any
+# two points from different subsets is at least d.
+# Input Format. The first line contains the number n of points. Each of the following n lines defines a point
+# (x[i], y[i]). The last line contains the number k of clusters.
+# Output Format. Output the largest value of d. The absolute value of the difference between the answer of
+# your program and the optimal value should be at most 10^−6. To ensure this, output your answer with
+# at least seven digits after the decimal point (otherwise your answer, while being computed correctly,
+# can turn out to be wrong because of rounding issues).
 
 class disjoint_set(): # a disjoint set object. standard implementation of disjoint set: see merging_table.py
     def __init__(self, n):
