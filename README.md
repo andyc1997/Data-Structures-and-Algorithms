@@ -1,5 +1,5 @@
 # Data-Structures-and-Algorithms
-Starting from March 2020, I have been learning algorithms in a more formal way through this specialization offered in Coursera, and try to solve algorithmic problems using Python. Explanations are provided in code. Every task is done in Python3, and I try to complete all tasks in this specialization.
+Starting from March 2020, I learn algorithms in a more formal way through this specialization offered in Coursera, and solve algorithmic problems using Python. Explanations are provided in code. Every task is done in Python3, and I wrote solutions for all tasks in this specialization.
 
 **Course link:**
 
@@ -44,3 +44,7 @@ Week 3: [Paths in Graphs 1](Algorithms-on-Graphs/Week3)
 Week 4: [Paths in Graphs 2](Algorithms-on-Graphs/Week4)
 
 Week 5: [Minimum Spanning Trees](Algorithms-on-Graphs/Week5)
+
+**Course 5: Advanced Algorithms and Complexity**
+
+Week 1: Flows in Networks
