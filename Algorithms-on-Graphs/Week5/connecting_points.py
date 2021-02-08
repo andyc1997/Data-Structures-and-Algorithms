@@ -32,10 +32,8 @@ class Heap(): # Standard implementation of binary heap: see dijkstra.py
     def SiftUp(self, i):
         while (i > 0) & (self.arr[Heap.Parent(i)][0] > self.arr[i][0]):     
             node_1, node_2 = self.arr[Heap.Parent(i)][1], self.arr[i][1]
-            
             index_node_1, index_node_2 = self.track.get(node_1), self.track.get(node_2)
             self.track[node_1], self.track[node_2] = index_node_2, index_node_1
-            
             self.arr[Heap.Parent(i)], self.arr[i] = self.arr[i], self.arr[Heap.Parent(i)]
             i = Heap.Parent(i)
         
