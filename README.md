@@ -45,6 +45,30 @@ Week 4: [Paths in Graphs 2](Algorithms-on-Graphs/Week4)
 
 Week 5: [Minimum Spanning Trees](Algorithms-on-Graphs/Week5)
 
+**Course 4: Algorithms on Strings**
+
+Week 1: Suffix Trees
+
+Week 2: Burrows-Wheeler Transform and Suffix Arrays
+
+Week 3: Knuth–Morris–Pratt Algorithm
+
+Week 4: Constructing Suffix Arrays and Suffix Trees
+
 **Course 5: Advanced Algorithms and Complexity**
 
 Week 1: Flows in Networks
+
+Week 2: Linear Programming
+
+Week 3: NP-complete Problems
+
+Week 4: Coping with NP-completeness
+
+**Course 6: Genome Assembly Programming Challenge**
+
+Week 1: The 2011 European E. coli Outbreak
+
+Week 2: Assembling Genomes Using de Bruijn Graphs
+
+Week 3: Genome Assembly Faces Real Sequencing Data
