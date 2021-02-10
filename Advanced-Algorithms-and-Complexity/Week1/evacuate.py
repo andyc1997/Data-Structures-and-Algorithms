@@ -1,187 +1,112 @@
 # python3
 # coding: utf-8
-
-# In[1]:
-
-
 from queue import Queue
+# Input Format. The first line of the input contains integers n and m — the number of cities and the number
+# of roads respectively. Each of the next m lines contains three integers u, v and c describing a particular
+# road — start of the road, end of the road and the number of people that can be transported through
+# this road in one hour. u and v are the 1-based indices of the corresponding cities.
+# The city from which people are evacuating is the city number 1, and the capital city is the city number n.
+# Output Format. Output a single integer — the maximum number of people that can be evacuated from
+# the city number 1 each hour.
 
-
-# In[2]:
-
-
-class Edge:
-
+class Edge: # an edge object
     def __init__(self, u, v, capacity):
-        self.u = u
-        self.v = v
-        self.capacity = capacity
-        self.flow = 0
+        self.u = u # edge from u
+        self.v = v # edge to v
+        self.capacity = capacity # capacity of edge
+        self.flow = 0 # current flow of edge
 
-# This class implements a bit unusual scheme for storing edges of the graph,
-# in order to retrieve the backward edge for a given edge quickly.
-class FlowGraph:
-
+class FlowGraph: # a network object
     def __init__(self, n):
-        # List of all - forward and backward - edges
-        self.edges = []
-        # These adjacency lists store only indices of edges in the edges list
-        self.graph = [[] for _ in range(n)]
+        self.edges = [] # list of all edges (in both directions) in the graph
+        self.graph = [[] for _ in range(n)] #  an adjacency list. index of the list is vertex. self.graph[index] contains the indices of edges in self.edge
 
     def add_edge(self, from_, to, capacity):
-        # Note that we first append a forward edge and then a backward edge,
-        # so all forward edges are stored at even indices (starting from 0),
-        # whereas backward edges are stored at odd indices.
-        forward_edge = Edge(from_, to, capacity)
-        backward_edge = Edge(to, from_, 0)
-        self.graph[from_].append(len(self.edges))
-        self.edges.append(forward_edge)
-        self.graph[to].append(len(self.edges))
-        self.edges.append(backward_edge)
+        # a method to add edge to graph
+        forward_edge = Edge(from_, to, capacity) # edge for the network
+        backward_edge = Edge(to, from_, 0) # edge for the residual network
+        self.graph[from_].append(len(self.edges)) # even index for forward edges
+        self.edges.append(forward_edge) # add edge to graph
+        self.graph[to].append(len(self.edges)) # odd index for backward edges
+        self.edges.append(backward_edge) # add edge to graph
 
     def size(self):
+        # a method to calculate the size of graph in terms of vertices
         return len(self.graph)
 
     def get_ids(self, from_):
+        # a method that returns indices in self.edges given with index vertex from_
         return self.graph[from_]
 
     def get_edge(self, id):
+        # a method that returns the edge given the index in self.edges
         return self.edges[id]
 
     def add_flow(self, id, flow):
-        # To get a backward edge for a true forward edge (i.e id is even), we should get id + 1
-        # due to the described above scheme. On the other hand, when we have to get a "backward"
-        # edge for a backward edge (i.e. get a forward edge for backward - id is odd), id - 1
-        # should be taken.
-        #
-        # It turns out that id ^ 1 works for both cases. Think this through!
+        # a method to add flow given indices in self.edges, and subtract the flow in the reversed edge
         self.edges[id].flow += flow
-        self.edges[id ^ 1].flow -= flow
+        self.edges[id ^ 1].flow -= flow # In python, id ^ 1 filps the last bit of binary representation of integer "id", e.g. 0001 ^ 1 = 0000 --> 0, 0100 ^ 1 = 0101 ---> 5
 
-
-# In[3]:
-
-
-def read_data():
+def read_data(): # read input data
     vertex_count, edge_count = map(int, input().split())
     graph = FlowGraph(vertex_count)
     for _ in range(edge_count):
         u, v, capacity = map(int, input().split())
-        graph.add_edge(u - 1, v - 1, capacity)
+        graph.add_edge(u - 1, v - 1, capacity) # u, v are converted to 0-based index in python
     return graph
 
-
-# In[4]:
-
-
-def read_data_path(path):
-    # Read text data
-    f = open(path, 'r')
-    count = 0
-    graph = None
-    for line in f:
-        if count == 0:
-            vertex_count, edge_count = map(int, line.split())
-            graph = FlowGraph(vertex_count)
-        else:
-            u, v, capacity = map(int, line.split())
-            graph.add_edge(u - 1, v - 1, capacity)
-        count += 1
-    return graph
-
-
-# In[5]:
-
-
-def read_data_test(n, m, array):
-    # Read hardcoded data
-    vertex_count, edge_count = n, m
-    graph = FlowGraph(vertex_count)
-    for i in range(edge_count):
-        u, v, capacity = array[(3 * i):(3 * (i + 1))]
-        graph.add_edge(u - 1, v - 1, capacity)
-    return graph
-
-
-# In[6]:
-
-
-def update_residual_graph(graph, X, edges, prev, from_, to):
+def update_residual_graph(graph, X, edges, prev, from_, to): # update the residual graph after adding flow
     while to != from_:
-        graph.add_flow(edges[to], X)
+        graph.add_flow(edges[to], X) # add the flow X to edges in residual graph
         to = prev[to]
     return graph
 
-
-# In[7]:
-
-
-def reconstruct_path(graph, from_, to, prev, edges):
+def reconstruct_path(graph, from_, to, prev, edges): # Standard implementation of the shortest path tree
     result = []
-    X = 10000 + 1
+    X = 10000 + 1 # It is guaranteed that the capacity is at most 10000
     while to != from_:
         result.append(to)
-        X = min(X, graph.get_edge(edges[to]).capacity - graph.get_edge(edges[to]).flow)
-        to = prev[to]
+        X = min(X, graph.get_edge(edges[to]).capacity - graph.get_edge(edges[to]).flow) # find the minimum capacity in the s-t path
+        to = prev[to] # update index
     return [from_] + [u for u in reversed(result)], X, edges, prev
 
-
-# In[8]:
-
-
-def find_a_path(graph, from_, to):
-    # initializing distance array
-    dist = [False] * graph.size()
-    dist[from_] = True
-    # initialize previous array
-    prev = [None] * graph.size()
-    # initialize edges array
-    edges = [None] * graph.size()
-    # a queue containing vertices
+def find_a_path(graph, from_, to): # Standard algorithm to find source-sink (s-t) path using breadth first search
+    dist = [False] * graph.size() # reachability of each node from the node with index "from_"
+    dist[from_] = True # of course the starting point is reachable to itself
+    prev = [None] * graph.size() # record the parent of each node
+    edges = [None] * graph.size() # record the index of edge in self.edges to reach from u to v
     q = Queue()
     q.put(from_)
+    
     while not q.empty():
         u = q.get()
         for id in graph.get_ids(u):
-            to_edge_v = graph.get_edge(id)
+            to_edge_v = graph.get_edge(id) # get edges from u to v
             v = to_edge_v.v
             flow = to_edge_v.flow
             capacity = to_edge_v.capacity
-            if (dist[v] == False) and (flow < capacity):
+            
+            if (dist[v] == False) and (flow < capacity): # consider unvisited node with flow < capacity as reachable node in BFS
                 q.put(v)
                 dist[v] = True
                 prev[v] = u
                 edges[v] = id
-    # Two cases: reachable and non-reachable
-    if dist[to] == True:
+
+    if dist[to] == True: # if sink is reachable, we reconstruct the path using shortest path tree
         return reconstruct_path(graph, from_, to, prev, edges)
     else:
         return [], 0, [], []
 
-
-# In[9]:
-
-
-def max_flow(graph, from_, to):
-    flow = 0
-    # your code goes here
+def max_flow(graph, from_, to): # Standard implementation of Edmonds-Karp algorithm
+    flow = 0 # initialize the flow with 0 at the beiginning
     while True:
-        path, X, edges, prev = find_a_path(graph, from_, to)
-        if len(path) == 0:
+        path, X, edges, prev = find_a_path(graph, from_, to) # find a s-t path
+        if len(path) == 0: # If there is no path: return flow
             return flow
-        flow += X
+        flow += X # otherwise, add the minimum capacity X in the s-t path to flow and update the residual graph
         graph = update_residual_graph(graph, X, edges, prev, from_, to)
     return flow
 
-
-# In[12]:
-
-
 if __name__ == '__main__':
-    #graph = read_data_test(5, 7, [1, 2, 2, 2, 5, 5, 1, 3, 6, 3, 4, 2, 4, 5, 1, 3, 2, 3, 2, 4, 1])
-    #graph = read_data_test(4, 5, [1, 2, 10000, 1, 3, 10000, 2, 3, 1, 3, 4, 10000, 2, 4, 10000])
-    #graph = read_data_test(6, 7, [1, 2, 1, 1, 3, 1, 2, 4, 1, 2, 5, 1, 3, 4, 1, 4, 6, 1, 5, 6, 1])
-    #graph = read_data_path(r'C:\Users\user\Documents\Coursera (2020)\Advanced Algorithms and Complexity\Programming-Assignment-1\mywork\failed_case\10.txt')
     graph = read_data()
-    print(max_flow(graph, 0, graph.size() - 1))
-
+    print(max_flow(graph, 0, graph.size() - 1)) # evacuate from city with number 1 to city with number n
