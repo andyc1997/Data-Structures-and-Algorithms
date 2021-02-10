@@ -1,166 +1,159 @@
 # python3
 from queue import Queue
-class DirectedGraph:
+# Task. You’re in the middle of writing your newspaper’s end-of-year economics summary, and you’ve decided
+# that you want to show a number of charts to demonstrate how different stocks have performed over the
+# course of the last year. You’ve already decided that you want to show the price of n different stocks,
+# all at the same k points of the year.
+# A simple chart of one stock’s price would draw lines between the points (0, price[0]), (1, price[1]), . . . , (k−
+# 1, price[k - 1]), where price[i] is the price of the stock at the i-th point in time.
+# Input Format. The first line of the input contains two integers n and k — the number of stocks and the
+# number of points in the year which are common for all of them. Each of the next n lines contains k
+# integers. The i-th of those n lines contains the prices of the i-th stock at the corresponding k points
+# in the year.
+# Output Format. Output a single integer — the minimum number of overlaid charts to visualize all the
+# stock price data you have.
+
+class DirectedGraph: # a directed graph object, use adjacency matrix to store the relation
     def __init__(self, stock_data):
         self.data = stock_data
-        self.n = len(stock_data)
+        self.n = len(stock_data) # n <= 100 in this problem, using adjacency matrix costs little memory!
         self.adj_list = [[0]*self.n for _ in range(self.n)]
 
-    def compare(self, i, j):
-        status = False
+    def compare(self, i, j): # a function to compare two stocks, i and j. If all elements of stock i are strictly smaller than those of stock j, return True
         stock_1, stock_2 = self.data[i], self.data[j]
-        if stock_1[0] < stock_2[0]:
-            status = True
-        if status is False:
-            return False
         for (p_1, p_2) in zip(stock_1, stock_2):
-            if p_1 >= p_2 and status is True:
+            if p_1 >= p_2:
                 return False
         return True
 
-    def build_graph(self):
+    def build_graph(self): # a function to fill the adjacency matrix
         for i in range(self.n):
             for j in range(self.n):
                 if i != j:
                     if self.compare(i, j):
                         self.adj_list[i][j] = 1
 
-class Edge: # an edge object
+class Edge: # an edge object, see airline.py
     def __init__(self, u, v, capacity):
-        self.u = u # edge from u
-        self.v = v # edge to v
-        self.capacity = capacity # capacity of edge
-        self.flow = 0 # current flow of edge
+        self.u = u
+        self.v = v
+        self.capacity = capacity
+        self.flow = 0
 
-class FlowGraph: # a network object
+class FlowGraph: # a network object, see airline.py
     def __init__(self, n):
-        self.edges = [] # list of all edges (in both directions) in the graph
-        self.graph = [[] for _ in range(n)] #  an adjacency list. index of the list is vertex. self.graph[index] contains the indices of edges in self.edge
+        self.edges = [] 
+        self.graph = [[] for _ in range(n)]
 
     def add_edge(self, from_, to, capacity):
-        # a method to add edge to graph
-        forward_edge = Edge(from_, to, capacity) # edge for the network
-        backward_edge = Edge(to, from_, 0) # edge for the residual network
-        self.graph[from_].append(len(self.edges)) # even index for forward edges
-        self.edges.append(forward_edge) # add edge to graph
-        self.graph[to].append(len(self.edges)) # odd index for backward edges
-        self.edges.append(backward_edge) # add edge to graph
+        forward_edge = Edge(from_, to, capacity) 
+        backward_edge = Edge(to, from_, 0) 
+        self.graph[from_].append(len(self.edges)) 
+        self.edges.append(forward_edge)
+        self.graph[to].append(len(self.edges)) 
+        self.edges.append(backward_edge) 
 
     def size(self):
-        # a method to calculate the size of graph in terms of vertices
         return len(self.graph)
 
     def get_ids(self, from_):
-        # a method that returns indices in self.edges given with index vertex from_
         return self.graph[from_]
 
     def get_edge(self, id):
-        # a method that returns the edge given the index in self.edges
         return self.edges[id]
 
     def add_flow(self, id, flow):
-        # a method to add flow given indices in self.edges, and subtract the flow in the reversed edge
         self.edges[id].flow += flow
-        self.edges[id ^ 1].flow -= flow # In python, id ^ 1 filps the last bit of binary representation of integer "id", e.g. 0001 ^ 1 = 0000 --> 0, 0100 ^ 1 = 0101 ---> 5
+        self.edges[id ^ 1].flow -= flow 
 
-
-def update_residual_graph(graph, X, edges, prev, from_, to):  # update the residual graph after adding flow
+def update_residual_graph(graph, X, edges, prev, from_, to):
     while to != from_:
-        graph.add_flow(edges[to], X)  # add the flow X to edges in residual graph
+        graph.add_flow(edges[to], X)
         to = prev[to]
     return graph
 
 
-def reconstruct_path(graph, from_, to, prev, edges):  # Standard implementation of the shortest path tree
+def reconstruct_path(graph, from_, to, prev, edges): # see airline.py
     result = []
-    X = 10000 + 1  # It is guaranteed that the capacity is at most 10000
+    X = 10000 + 1 
     while to != from_:
         result.append(to)
         X = min(X, graph.get_edge(edges[to]).capacity - graph.get_edge(
-            edges[to]).flow)  # find the minimum capacity in the s-t path
-        to = prev[to]  # update index
+            edges[to]).flow)  
+        to = prev[to]  
     return [from_] + [u for u in reversed(result)], X, edges, prev
 
 
-def find_a_path(graph, from_, to):  # Standard algorithm to find source-sink (s-t) path using breadth first search
-    dist = [False] * graph.size()  # reachability of each node from the node with index "from_"
-    dist[from_] = True  # of course the starting point is reachable to itself
-    prev = [None] * graph.size()  # record the parent of each node
-    edges = [None] * graph.size()  # record the index of edge in self.edges to reach from u to v
+def find_a_path(graph, from_, to): # see airline.py
+    dist = [False] * graph.size()  
+    dist[from_] = True 
+    prev = [None] * graph.size()  
+    edges = [None] * graph.size() 
     q = Queue()
     q.put(from_)
 
     while not q.empty():
         u = q.get()
         for id in graph.get_ids(u):
-            to_edge_v = graph.get_edge(id)  # get edges from u to v
+            to_edge_v = graph.get_edge(id) 
             v = to_edge_v.v
             flow = to_edge_v.flow
             capacity = to_edge_v.capacity
 
             if (dist[v] == False) and (
-                    flow < capacity):  # consider unvisited node with flow < capacity as reachable node in BFS
+                    flow < capacity): 
                 q.put(v)
                 dist[v] = True
                 prev[v] = u
                 edges[v] = id
 
-    if dist[to] == True:  # if sink is reachable, we reconstruct the path using shortest path tree
+    if dist[to] == True: 
         return reconstruct_path(graph, from_, to, prev, edges)
     else:
         return [], 0, [], []
 
 
-def max_flow(graph, from_, to):  # Standard implementation of Edmonds-Karp algorithm
-    flow = 0  # initialize the flow with 0 at the beiginning
+def max_flow(graph, from_, to):  # Standard implementation of Edmonds-Karp algorithm, see airline.py
+    flow = 0  
     while True:
-        path, X, edges, prev = find_a_path(graph, from_, to)  # find a s-t path
-        if len(path) == 0:  # If there is no path: return flow
+        path, X, edges, prev = find_a_path(graph, from_, to)
+        if len(path) == 0:  
             return flow
-        flow += X  # otherwise, add the minimum capacity X in the s-t path to flow and update the residual graph
+        flow += X  
         graph = update_residual_graph(graph, X, edges, prev, from_, to)
     return flow
 
 class StockCharts:
-    def read_data(self):
+    def read_data(self): # read input
         n, k = map(int, input().split())
         stock_data = [list(map(int, input().split())) for i in range(n)]
         return stock_data
 
-    def write_response(self, result):
+    def write_response(self, result): # write output
         print(result)
 
     def min_charts(self, stock_data):
-        n = len(stock_data)
-        dag = DirectedGraph(stock_data)
-        dag.build_graph()
-        network = FlowGraph(2*(n + 1))
-        source, sink, capacity = 0, 2*n + 1, 1
+        # Idea: If stock[i] > stock[j] for all elements, then these two stocks can be put together in the same chart
+        # Let there be a bipartite graph of two set of vertices of size n. 
+        # We can draw a line to connect a pair of vertices only if stock[i] in left hand side > stock[j] in right hand side
+        # Simple cases:
+        # If stock[i] > stock[j] and stock[j] > stock[k] (which automatically implies stock[i] > stock[k] , then there are three matches and all of them can be put into a single chart
+        # If stock[i] > stock[j] and stock[k] > stock[j] but stock[k] !> stock[i], then there are two matches in the bipartite graph
+        # So, n - number of matches = number of chart needed
+        n = len(stock_data) # n = number of stocks in total
+        dag = DirectedGraph(stock_data) # Initialize the directed graph
+        dag.build_graph() # Build adjacency matrix
+        network = FlowGraph(2*(n + 1)) # Initialize the network
+        source, sink, capacity = 0, 2*n + 1, 1 # Let source has index 0, sink has index 2*n + 1, capacity is 1 for each edge
 
         for i in range(1, n + 1):
-            network.add_edge(source, i, 1)
+            network.add_edge(source, i, 1) # add edges from source to stock[i]
             for j in range(n + 1, 2*n + 1):
-                if dag.adj_list[i - 1][j - (n + 1)] == 1:
+                if dag.adj_list[i - 1][j - (n + 1)] == 1: # if stock[i] > stock[j] at all time point, add edges from stock[i] to stock[j]
                     network.add_edge(i, j, 1)
-        for j in range(n + 1, 2*(n + 1)):
+        for j in range(n + 1, 2*(n + 1)): # add edges from stock[j] to sink
             network.add_edge(j, sink, 1)
-        return n - max_flow(network, source, sink)
-        # for new_stock in stock_data:
-        #     added = False
-        #     for chart in charts:
-        #         fits = True
-        #         for stock in chart:
-        #             above = all([x > y for x, y in zip(new_stock, stock)])
-        #             below = all([x < y for x, y in zip(new_stock, stock)])
-        #             if (not above) and (not below):
-        #                 fits = False
-        #                 break
-        #         if fits:
-        #             added = True
-        #             chart.append(new_stock)
-        #             break
-        #     if not added:
-        #         charts.append([new_stock])
+        return n - max_flow(network, source, sink) # the maxflow is the maximum number of stocks 
 
     def solve(self):
         stock_data = self.read_data()
