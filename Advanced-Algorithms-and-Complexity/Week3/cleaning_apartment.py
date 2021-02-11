@@ -1,53 +1,5 @@
-# python3
-# -*- coding: utf-8 -*-
-"""
-Created on Mon Jan 11 04:17:37 2021
-
-@author: user
-"""
 import itertools
-n, m = map(int, input().split())
-edges = [ list(map(int, input().split())) for i in range(m)]
-
-#%% Debug data
-# n = 5
-# m = 4
-# edges = [[1, 2], [2, 3], [3, 5], [4, 5]]
-
-#%% Debug data
-# n = 4
-# m = 3
-# edges = [[1, 2], [1, 3], [1, 4]]
-
-#%% Debug data
-# n = 4
-# m = 2
-# edges = [[1, 2], [3, 4]]
-
-#%% Debug data
-# n = 5
-# m = 0
-# edges = []
-
-#%% Debug data
-# n = 1
-# m = 0
-# edges = []
-
-#%% Debug data
-# n, m = 0, 0
-# edges = []
-# with open('test_case.txt', 'r')as f:
-#     lines = f.readlines()
-#     i = 0
-#     for l in lines:
-#         if i == 0:
-#             n, m = map(int, l.split())
-#         else:
-#             edges.append(list(map(int, l.split())))
-#         i += 1
-        
-#%% Program
+ 
 # Number of vertices
 vertex = range(1, n + 1)
 
@@ -83,7 +35,7 @@ def depth_first_search(adj_list, start, reachable):
         if reachable[adj_vertex] == False:
             depth_first_search(adj_list, adj_vertex, reachable)
 
-def printEquisatisfiableSatFormula():
+def sat_formula():
     # Total clause containing all clauses
     total_clause = empty_clause()
     
@@ -171,13 +123,7 @@ def printEquisatisfiableSatFormula():
         total_clause.append([1])
     
     # Print the output to console 
-    print('{} {}\n'.format(len(total_clause), 120000))
+    print('{} {}\n'.format(len(total_clause), 100000))
     print_clause(total_clause)
-#%% Write output to .txt file for minisat, uncomment if necessary
-    # with open('tmp.txt', 'w') as f:
-    #     f.write('p cnf {} {}\n'.format(120000, len(total_clause)))
-    #     for c in total_clause:
-    #         c.append(0)
-    #         f.write(" ".join(map(str, c)) + '\n')
-    
-printEquisatisfiableSatFormula()
+
+sat_formula()
