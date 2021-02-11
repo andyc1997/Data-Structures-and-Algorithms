@@ -1,5 +1,9 @@
+# python3
+# -*- coding: utf-8 -*-
 import itertools
- 
+# This can be reduced to a classic Hamiltonian Path problem: given a graph, determine whether there is
+# a route visiting each vertex exactly once.
+
 # Number of vertices
 vertex = range(1, n + 1)
 
