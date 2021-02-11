@@ -54,28 +54,22 @@ def SelectPivotElement(a, b, used_rows, used_columns):
     # the if condition will not be activated and return the found pivot element immediately in this case, no need for searching and swapping
     return pivot_element
 
-def SwapLines(a, b, used_rows, pivot_element):
-    # If pivot element is at the diagonal, no swapping 
-    # If the pivot element is found below the diagonal do swapping
-    a[pivot_element.column], a[pivot_element.row] = a[pivot_element.row], a[pivot_element.column]
-    b[pivot_element.column], b[pivot_element.row] = b[pivot_element.row], b[pivot_element.column]
-    used_rows[pivot_element.column], used_rows[pivot_element.row] = used_rows[pivot_element.row], used_rows[pivot_element.column]
-    pivot_element.row = pivot_element.column;
-
 def ProcessPivotElement(a, b, pivot_element):
-    scaling_factor = a[pivot_element.row][pivot_element.column]
-    a[pivot_element.row] = list(map(lambda x: x / scaling_factor, a[pivot_element.row]))
-    b[pivot_element.row] /= scaling_factor
+    scaling_factor = a[pivot_element.row][pivot_element.column] # the pivot element is a scaling factor to subtract from other rows
+    a[pivot_element.row] = list(map(lambda x: x / scaling_factor, a[pivot_element.row])) # divide pivot row with scaling factor, the position of pivot element has value 1 now
+    b[pivot_element.row] /= scaling_factor # also divide the constant vector as we work on [A|b] during Gaussian elimination
     size = len(a)
-    if pivot_element.row + 1 < size:
+    if pivot_element.row + 1 < size: # From pivot row + 1 to the bottom
         for non_pivot in range(pivot_element.row + 1, size):
-            multiple = a[non_pivot][pivot_element.column]
-            for column in range(pivot_element.column, len(a[0])):
-                a[non_pivot][column] -= multiple * a[pivot_element.row][column]
+            # To clear all elements below the pivot element in the pivot column
+            multiple = a[non_pivot][pivot_element.column] # extract the element within the same column as pivot element for rows below pivot row
+            for column in range(pivot_element.column, len(a[0])): # multiply this element with (each element in) pivot rows and subtract it from nonpivot row 
+                a[non_pivot][column] -= multiple * a[pivot_element.row][column] 
             b[non_pivot] -= multiple * b[pivot_element.row]
-    if pivot_element.row > 0:
+    if pivot_element.row > 0: # Similar process as above
         for above_pivot in range(0, pivot_element.row):
-            multiple = a[above_pivot][pivot_element.column]
+            # To clear all elements above the pivot element in the pivot column
+            multiple = a[above_pivot][pivot_element.column] # extract the element within the same column as pivot element for rows above pivot row
             for column in range(pivot_element.column, len(a[0])):
                 a[above_pivot][column] -= multiple * a[pivot_element.row][column]
             b[above_pivot] -= multiple * b[pivot_element.row]
@@ -89,15 +83,14 @@ def SolveEquation(equation):
     a = equation.a
     b = equation.b
     size = len(a)
-    
     used_columns = [False] * size
     used_rows = [False] * size
+    
     for step in range(size):
-        pivot_element = SelectPivotElement(a, b, used_rows, used_columns) # select the pivot element of each row
-        SwapLines(a, b, used_rows, pivot_element)
-        ProcessPivotElement(a, b, pivot_element)
-        MarkPivotElementUsed(pivot_element, used_rows, used_columns)
-    return b
+        pivot_element = SelectPivotElement(a, b, used_rows, used_columns) # select the pivot element of each row, do swap line if necessary
+        ProcessPivotElement(a, b, pivot_element) # performs row operations to clear all elements ahove and below the pivot in the pivot column
+        MarkPivotElementUsed(pivot_element, used_rows, used_columns) # now, mark the pivot element as "used' and don't reuse it in the next iteration
+    return b # b after Gaussian elimination is the solution to the problem
 
 def PrintColumn(column):
     size = len(column)
