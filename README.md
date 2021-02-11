@@ -59,11 +59,11 @@ Week 4: Constructing Suffix Arrays and Suffix Trees
 
 Week 1: [Flows in Networks](Advanced-Algorithms-and-Complexity/Week1)
 
-Week 2: Linear Programming
+Week 2: [Linear Programming](Advanced-Algorithms-and-Complexity/Week2)
 
-Week 3: NP-complete Problems
+Week 3: [NP-complete Problems](Advanced-Algorithms-and-Complexity/Week3)
 
-Week 4: Coping with NP-completeness
+Week 4: [Coping with NP-completeness](Advanced-Algorithms-and-Complexity/Week4)
 
 **Course 6: Genome Assembly Programming Challenge**
 
