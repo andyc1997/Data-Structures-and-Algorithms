@@ -4,9 +4,9 @@ import itertools
 # This is equivalent to a classical graph coloring problem: in other words, you are given a graph, and
 # you need to color its vertices into 3 different colors, so that any two vertices connected by an edge
 # need to be of different colors.
+
 n, m = map(int, input().split())
 edges = [list(map(int, input().split())) for i in range(m)]
-
 vertex = range(1, n + 1)
 color = range(1, 4)
 naming_scheme = [[v + (c - 1)*max(vertex) for v in vertex] for c in color]
