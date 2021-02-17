@@ -4,6 +4,8 @@ import itertools
 # This can be reduced to a classic Hamiltonian Path problem: given a graph, determine whether there is
 # a route visiting each vertex exactly once.
 
+n, m = map(int, input().split())
+edges = [list(map(int, input().split())) for i in range(m)]
 # Number of vertices
 vertex = range(1, n + 1)
 
