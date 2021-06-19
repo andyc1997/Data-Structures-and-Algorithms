@@ -14,11 +14,8 @@ class Vertex:
         self.children = []
 
 def ReadTree():
-    # Number of nodes
-    size = int(input())
-    
-    # Weighting of vertices
-    tree = [Vertex(w) for w in map(int, input().split())]
+    size = int(input()) # Number of nodes
+    tree = [Vertex(w) for w in map(int, input().split())] # Weighting of vertices
     
     for i in range(1, size):
         a, b = list(map(int, input().split()))
@@ -34,34 +31,21 @@ def dfs(tree, vertex, parent):
     # A dynamic programming implementation
     # If the weights of vertex hasn't been updated:
     if weights[vertex] == -1:
-        # If the vertex has exactly one child and not the root
-        if len(tree[vertex].children) == 1 and parent != -1:
-            # Return the weight directly
-            weights[vertex] = tree[vertex].weight
+        if len(tree[vertex].children) == 1 and parent != -1: # If the vertex has exactly one child and not the root
+            weights[vertex] = tree[vertex].weight # Return the weight directly
         
-        # It has more than one child or being the root
-        else:
-            # Current weighting of the vertex
-            current_weight = tree[vertex].weight
-            # Children
-            for children in tree[vertex].children:
-                # Avoid infinite loop due to two possible subordinations
-                if children != parent:
-                    # Grandchildren
-                    for grandchildren in tree[children].children:
-                        # Avoid inifinite loop due to two possible subordinations
-                        if grandchildren != vertex:
-                            # Add weights of grandchildren
-                            current_weight += dfs(tree, grandchildren, children)
+        else: # It has more than one child or being the root
+            current_weight = tree[vertex].weight # Current weighting of the vertex      
+            for children in tree[vertex].children: # Children   
+                if children != parent: # Avoid infinite loop due to two possible subordinations
+                    for grandchildren in tree[children].children: # Grandchildren               
+                        if grandchildren != vertex: # Avoid inifinite loop due to two possible subordinations
+                            current_weight += dfs(tree, grandchildren, children) # Add weights of grandchildren
             
-            # Weighting of the children vertex
-            next_weight = 0
-            # Children
-            for children in tree[vertex].children:
-                # Avoid infinite loop due to two possible subordinations
-                if children != parent:
-                    # Add weights of chilren
-                    next_weight += dfs(tree, children, vertex)
+            next_weight = 0 # Weighting of the children vertex    
+            for children in tree[vertex].children: # Children  
+                if children != parent: # Avoid infinite loop due to two possible subordinations
+                    next_weight += dfs(tree, children, vertex) # Add weights of chilren
             
             # Dynamic programming: Either current vertex + grandchildren or children
             weights[vertex] = max(current_weight, next_weight)
@@ -69,15 +53,12 @@ def dfs(tree, vertex, parent):
     return weights[vertex]
 
 def MaxWeightIndependentTreeSubset(tree):
-    # The number of nodes
-    size = len(tree)
+    size = len(tree) # The number of nodes
     
-    # Handle trivial case: no nodes
-    if size == 0:
+    if size == 0: # Handle trivial case: no nodes
         return 0
     
-    # Global variable: container for the optimal weights
-    global weights
+    global weights # Global variable: container for the optimal weights
     weights = [-1] * size
     
     # DFS + Dynamic programming
