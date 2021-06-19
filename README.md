@@ -47,7 +47,7 @@ Week 5: [Minimum Spanning Trees](Algorithms-on-Graphs/Week5)
 
 **Course 4: Algorithms on Strings**
 
-Week 1: Suffix Trees
+Week 1: [Suffix Trees](Algorithms-on-Strings/Week1)
 
 Week 2: Burrows-Wheeler Transform and Suffix Arrays
 
