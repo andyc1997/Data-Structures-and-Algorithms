@@ -4,7 +4,7 @@ import sys
 import threading
 
 # This code is used to avoid stack overflow issues
-sys.setrecursionlimit(10**6) # max depth of recursion
+sys.setrecursionlimit(10**7) # max depth of recursion
 threading.stack_size(2**26)  # new thread will get stack of such size
 
 
@@ -34,14 +34,22 @@ def ReadTree():
     return tree
 
 def dfs(tree, vertex, parent):
-    for child in tree[vertex].children:
-        if child != parent:
-            dfs(tree, child, vertex)
     if weights[vertex] == -1:
-        if len(tree[vertex].children) == 0:
-            if vertex != 0:
+        if len(tree[vertex].children) == 1 and parent != -1:
                 weights[vertex] = tree[vertex].weight
-
+        else:
+            current_weight = tree[vertex].weight
+            for children in tree[vertex].children:
+                if children != parent:
+                    for grandchildren in tree[children].children:
+                        if grandchildren != vertex:
+                            current_weight += dfs(tree, grandchildren, children)
+            next_weight = 0
+            for children in tree[vertex].children:
+                if children != parent:
+                    next_weight += dfs(tree, children, vertex)
+            weights[vertex] = max(current_weight, next_weight)
+    return weights[vertex]
 
 def MaxWeightIndependentTreeSubset(tree):
     size = len(tree)
@@ -53,9 +61,9 @@ def MaxWeightIndependentTreeSubset(tree):
 
 
 def main():
-    tree = DebugReadTree();
-    weight = MaxWeightIndependentTreeSubset(tree);
+    tree = ReadTree()
+    weight = MaxWeightIndependentTreeSubset(tree)
     print(weight)
 
 # This is to avoid stack overflow issues
-threading.Thread(target=main).start()
+threading.Thread(target = main).start()
