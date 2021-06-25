@@ -1,10 +1,3 @@
-# Data-Structures-and-Algorithms
-Starting from March 2020, I learn algorithms in a more formal way through this specialization offered in Coursera, and solve algorithmic problems using Python. Not all problems are solved, some are still in the progress.
-
-**Course link:**
-
-https://www.coursera.org/specializations/data-structures-algorithms
-
 **Course 1: Algorithmic Toolbox**
 
 Week 1: [Programming Challenges](Algorithmic-Toolbox/Week1)
@@ -65,10 +58,4 @@ Week 3: [NP-complete Problems](Advanced-Algorithms-and-Complexity/Week3)
 
 Week 4: [Coping with NP-completeness](Advanced-Algorithms-and-Complexity/Week4)
 
-**Course 6: Genome Assembly Programming Challenge**
 
-Week 1: The 2011 European E. coli Outbreak
-
-Week 2: Assembling Genomes Using de Bruijn Graphs
-
-Week 3: Genome Assembly Faces Real Sequencing Data
