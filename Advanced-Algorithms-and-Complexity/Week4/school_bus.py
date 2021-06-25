@@ -60,7 +60,7 @@ def tsp_solver(graph):
         optimal_set = (1 << n) - 1
         while optimal_set != None:
             best_path.append(last_vertex)
-            optimal_set, last_vertex = path_table[optimal_set][last_vertex] # gives us the previous vertex and solution
+            optimal_set, last_vertex = path_table[optimal_set][last_vertex - 1] # gives us the previous vertex and solution
         return best_ans, reversed(best_path)
 
 if __name__ == '__main__':
