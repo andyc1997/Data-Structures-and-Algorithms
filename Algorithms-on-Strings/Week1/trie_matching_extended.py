@@ -1,71 +1,70 @@
 # python3
 import sys
 
-NA = -1
-class Node:
-    def __init__ (self):
-        self.next = [NA] * 4
-        self.patternEnd = False
-
+# Modify original trie building to account for overlapping patterns
 def build_trie(patterns):
     tree = dict({0: dict()})
     node_idx = 0
-    # write your code here
+    
     for pattern in patterns:
         currentNode = 0
+        
         for i in range(len(pattern)):
             currentSymbol = pattern[i]
+            
             if currentSymbol in tree[currentNode]:
                 currentNode = tree[currentNode][currentSymbol]
-                if i == len(pattern) - 1:
-                    tree[currentNode]['$'] = -1
+                    
             else:
                 node_idx += 1
                 tree.update({node_idx: dict()})
                 tree[currentNode][currentSymbol] = node_idx
                 currentNode = node_idx
-                if i == len(pattern) - 1:
-                    tree[currentNode]['$'] = -1
-    #print(tree)
+
+            if i == len(pattern) - 1: # If the current character is the last character of the pattern
+                tree[currentNode]['$'] = -1 # Add '$' to the dictionary under the current node with value -1
+                    
     return tree
 
+# Modify prefix matching algorithm to account for overlapping patterns
 def prefix_trie_matching(text, trie):
     text += '$'
-    i = 0
-    symbol = text[i]
-    v = 0
+    i, v = 0, 0
+    symbol = text[i] # Start with the first character of the text
+    
     while True:
         if symbol in trie[v]:
             v = trie[v][symbol]
-            if '$' in trie[v]:
+            
+            if '$' in trie[v]: # Also return True (pattern is found) if '$' is found but not at the leaf
                 return True
-            elif len(trie[v]) == 0:
+            
+            elif len(trie[v]) == 0: # Return True at the leaf
                 return True
+            
+            # Update
             i += 1
             symbol = text[i]
+            
         else:
             return False
-        
+
+# Reuse the code from trie_matching.py
 def solve(text, n, patterns):
     trie = build_trie(patterns)
     result = []
-    # write your code here
     j = 0
     while len(text) > j:
         if prefix_trie_matching(text[j:], trie) == True:
             result.append(j)
         j += 1
-    print(trie)
     return result
 
-#text = sys.stdin.readline().strip()
-#n = int(sys.stdin.readline().strip())
-#patterns = []
-#for i in range(n):
-#	patterns += [sys.stdin.readline().strip()]
-#ans = solve(text, n, patterns)
-#ans = solve('ACATA', 3, ['AT', 'A', 'AG'])
-#ans = solve('ATTGTTTTCTCGAGCGC', 7, ['TAATA', 'AAGTGAGCAG', 'GCTCACATA', 'CCAC', 'C',
-#                                     'GCC', 'TGTTCTTA'])
-ans = solve('CCCCCCCCCCCCCCCCCA', 3, ['CA'])
+text = sys.stdin.readline().strip()
+n = int(sys.stdin.readline().strip())
+patterns = []
+for i in range(n):
+	patterns += [sys.stdin.readline().strip()]
+
+ans = solve(text, n, patterns)
 sys.stdout.write(' '.join(map(str, ans)) + '\n')
