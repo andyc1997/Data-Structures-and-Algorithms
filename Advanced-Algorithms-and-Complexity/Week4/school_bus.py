@@ -50,8 +50,6 @@ def tsp_solver(graph):
             best_ans = C[(1 << n) - 1][i] + graph[i][0]
             last_vertex = i
 
-    last_vertex += 1 # Add 1 to get back the original index
-
     # Case when no solution
     if best_ans >= INF:
         return -1, []
@@ -59,8 +57,8 @@ def tsp_solver(graph):
         # Backtrack the shortest path from the full set 1...n
         optimal_set = (1 << n) - 1
         while optimal_set != None:
-            best_path.append(last_vertex)
-            optimal_set, last_vertex = path_table[optimal_set][last_vertex - 1] # gives us the previous vertex and solution
+            best_path.append(last_vertex + 1) # Add 1 to get back the original index
+            optimal_set, last_vertex = path_table[optimal_set][last_vertex] # gives us the previous vertex and solution
         return best_ans, reversed(best_path)
 
 if __name__ == '__main__':
