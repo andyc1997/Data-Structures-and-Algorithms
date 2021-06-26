@@ -42,11 +42,11 @@ Week 5: [Minimum Spanning Trees](Algorithms-on-Graphs/Week5)
 
 Week 1: [Suffix Trees](Algorithms-on-Strings/Week1)
 
-Week 2: Burrows-Wheeler Transform and Suffix Arrays
+Week 2: [Burrows-Wheeler Transform and Suffix Arrays](Algorithms-on-Strings/Week2)
 
 Week 3: Knuth–Morris–Pratt Algorithm
 
-Week 4: Constructing Suffix Arrays and Suffix Trees
+Week 4: [Constructing Suffix Arrays and Suffix Trees](Algorithms-on-Strings/Week4)
 
 **Course 5: Advanced Algorithms and Complexity**
 
